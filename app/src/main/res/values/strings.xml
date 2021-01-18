@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">MG</string>
+
+    <string name="item_style_theme_orange_abstract">更改为橙色主题颜色</string>
+    <string name="item_style_theme_red_abstract">更改为红色主题颜色</string>
+    <string name="item_style_theme_green_abstract">更改为绿色主题颜色</string>
+    <string name="item_style_theme_blue_abstract">更改为蓝色主题颜色</string>
+    <string name="item_style_content_translation_off">下拉的时候列表内容停留在原位不动</string>
+    <string name="item_style_content_translation_on">下拉的时候列表内容跟随向下偏移</string>
+    <string name="item_style_horizontal_drag_on">打开左右拖动效果</string>
+    <string name="item_style_horizontal_drag_off">关闭左右拖动效果</string>
+    <string name="item_style_spinner_scale">下拉的时候Header的高度跟随变大</string>
+    <string name="item_style_spinner_translation">下拉的时候Header的位置向下偏移</string>
+    <string name="item_style_spinner_behind">下拉的时候Header固定在背后</string>
+    <string name="item_style_spinner_update_on">开启显示上次更新功能</string>
+    <string name="item_style_spinner_update_off">关闭显示上次更新功能</string>
+    <string name="item_style_theme_default_abstract">更改为默认主题颜色</string>
+    <string name="item_style_load_more">上拉加载更多</string>
+    <string name="item_style_bezier_on">下拉的时候绘制贝塞尔曲线背景</string>
+    <string name="item_style_bezier_off">下拉的时候不绘制贝塞尔曲线背景</string>
+    <string name="item_style_app_bar_expand">展开AppBarLayout，变成可伸展头部的页面</string>
+    <string name="item_style_app_bar_collapse">折叠AppBarLayout，变成正常的列表页面</string>
+    <string name="item_style_store_house_english">跟换显示符号为英文</string>
+    <string name="item_style_store_house_chinese">跟换显示符号为中文</string>
+    <string name="item_style_store_house_icon">跟换显示符号为图标</string>
+    <string name="item_style_store_house_brand">跟换显示符号为商标</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_item_settings">1</string>
+    <string name="drawer_item_home">2</string>
+    <string name="detail_text">2dwqddddddddddddddddddddd</string>
+
+
+    <string name="order_id_mock" translatable="false"># 1234–5678</string>
+    <string name="price_mock" translatable="false">$25</string>
+    <string name="requests_count_mock" translatable="false">1</string>
+    <string name="semester" translatable="false">学期</string>
+    <string name="weight_mock" translatable="false">50 oz</string>
+    <string name="weight_badge" translatable="false">WEIGHT</string>
+    <string name="pledge_mock" translatable="false">$150</string>
+    <string name="teacherName" translatable="false">教师</string>
+    <string name="sender_badge" translatable="false">SENDER</string>
+    <string name="client_name_mock" translatable="false">Edward Norton</string>
+    <string name="rating_mock" translatable="false">(26)</string>
+    <string name="content_beginTime_label" translatable="false">开始时间</string>
+    <string name="to_badge" translatable="false">结束时间</string>
+    <string name="delivery_date_badge" translatable="false">学时</string>
+    <string name="delivery_time_mock" translatable="false">100</string>
+    <string name="delivery_date_mock" translatable="false">May 16, 2016</string>
+    <string name="deadline_badge" translatable="false">假期</string>
+    <string name="deadline_time_mock" translatable="false">2022-1-21至2022-2-20</string>
+    <string name="request_btn_text" translatable="false">收起</string>
+    <string name="btn_annotation_mock" translatable="false">5 people have sent a request</string>
+    <string name="content_beginTime">2021-10-1</string>
+    <string name="content_from2_mock">New York, NY 10025</string>
+    <string name="content_to1_mock">2022-1-21</string>
+    <string name="content_to2_mock">Woodside, NY 11101</string>
+    <string name="title_activity_main2">Main2Activity</string>
+</resources>

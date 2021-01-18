@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".view.EduVideoFragment" android:orientation="vertical">
+
+    <Toolbar android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/videToolbar">
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/videoTitle"
+                  android:text="教学视频"
+                  android:layout_gravity="center"
+                  android:singleLine="true">
+        </TextView>
+    </Toolbar>
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/videoRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FAFAFA">
+        <com.scwang.smart.refresh.header.MaterialHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/videoRecyclerView">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+
+</LinearLayout>

@@ -77,7 +77,7 @@ public class EduVideoFragment extends Fragment {
             data.setIcon(Datas.icons[i]);
             data.setTitle("我是第 " + i + " 章视频") ;
             //添加到集合里头
-            data.url = "https://v-cdn.zjol.com.cn/280443.mp4";
+            data.url = "http://stream4.iqilu.com/ksd/video/2020/02/17/c5e02420426d58521a8783e754e9f4e6.mp4";
             mData.add(data);
         }
 

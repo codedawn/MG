@@ -1,154 +1,200 @@
 package com.codedawn.mg;
 
-import android.graphics.Color;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-import com.codedawn.mg.adapter.MyFragmentAdapter;
-import com.codedawn.mg.view.*;
-import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
-import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
-import devlight.io.library.ntb.NavigationTabBar;
+import com.codedawn.mg.db.DBOpenHelper;
+import com.codedawn.mg.view.HomeActivity;
+import com.codedawn.mg.view.RegisterActivity;
 
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * @author codedawn
- */
-public class MainActivity extends AppCompatActivity {
-
-    private List<Fragment> mFragmentList;
-    private FlowingDrawer mDrawer;
-
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private EditText etUser;
+    private EditText etPassword;
+    private CheckBox cbPWD;
+    private Button btRegister;
+    private Button btLogin;
+    private String SP_USER="sp_user";
+    private String SP_PASSWORD = "sp_password";
+    private String SP_IS_REMEMBER_PSD = "sp_is_remember_psd";
+    private SharedPreferences sharedPreferences;
+    private static boolean mIsChecked = false;
+    private String TAG = "MainActivity";
+    private DBOpenHelper dbOpenHelper;
+    private SQLiteDatabase db;
+    private Cursor cursor;
+    private ContentValues cv;
+    private static String userName;
+    private static String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initUI();
-        initDrawer();
+
+        //初始化控件
+        init();
+        initData();
+
+
 
     }
 
-    /**
-     * 初始化侧边栏
-     */
-    private void initDrawer(){
-        mDrawer = (FlowingDrawer) findViewById(R.id.drawerlayout);
-        mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_BEZEL);
-        mDrawer.setOnDrawerStateChangeListener(new ElasticDrawer.OnDrawerStateChangeListener() {
+    private void initData() {
+
+
+        if (sharedPreferences == null){
+            //实例化一个SharedPreference对象
+            sharedPreferences = getApplicationContext().getSharedPreferences("config", Context.MODE_PRIVATE);
+
+        }
+
+        //回显数据
+        etUser.setText(sharedPreferences.getString(SP_USER,""));
+        etPassword.setText(sharedPreferences.getString(SP_PASSWORD,""));
+        mIsChecked = sharedPreferences.getBoolean(SP_IS_REMEMBER_PSD,false);
+        cbPWD.setChecked(mIsChecked);
+
+
+    }
+
+    private void init() {
+        //获取用户名和密码输入框
+        etUser=findViewById(R.id.et_user);
+        etUser.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onDrawerStateChange(int oldState, int newState) {
-                if (newState == ElasticDrawer.STATE_CLOSED) {
-                    Log.i("MainActivity", "Drawer STATE_CLOSED");
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(mIsChecked){
+
+                    if(sharedPreferences==null){
+                        //实例化一个SharedPreference对象
+                        sharedPreferences = getApplicationContext().getSharedPreferences("config", Context.MODE_PRIVATE);
+                    }
+                    //实例化一个SharedPreference的编辑者对象
+                    SharedPreferences.Editor edit = sharedPreferences.edit();
+                    edit.putString(SP_USER,etUser.getText().toString());
+                    //提交
+                    edit.commit();
+                }
+
+
+            }
+        });
+        etPassword=findViewById(R.id.et_password);
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(mIsChecked) {
+                    //记录密码变化情况
+                    if (sharedPreferences == null) {
+                        //实例化一个SharedPreference对象
+                        sharedPreferences = getApplicationContext().getSharedPreferences("config", Context.MODE_PRIVATE);
+                    }
+                    //实例化一个SharedPreference的编辑者对象
+                    SharedPreferences.Editor edit = sharedPreferences.edit();
+                    edit.putString(SP_PASSWORD, etPassword.getText().toString());
+                    //提交
+                    edit.commit();
                 }
             }
+        });
+        //获取勾选按钮
+        cbPWD=findViewById(R.id.cb_psd);
 
+        cbPWD.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onDrawerSlide(float openRatio, int offsetPixels) {
-                Log.i("MainActivity", "openRatio=" + openRatio + " ,offsetPixels=" + offsetPixels);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                mIsChecked = isChecked;
+
+                if(isChecked){
+                    if(sharedPreferences==null){
+                        //实例化一个SharedPreference对象
+                        sharedPreferences = getApplicationContext().getSharedPreferences("config", Context.MODE_PRIVATE);
+                    }
+
+                    //实例化一个SharedPreference的编辑者对象
+                    SharedPreferences.Editor edit = sharedPreferences.edit();
+                    //存储数据
+                    edit.putString(SP_USER,etUser.getText().toString());
+                    edit.putString(SP_PASSWORD,etPassword.getText().toString());
+                    edit.putBoolean(SP_IS_REMEMBER_PSD,mIsChecked);
+                    //提交
+                    edit.commit();
+                }
             }
         });
+        findViewById(R.id.bt_register).setOnClickListener((View.OnClickListener) this);
+        findViewById(R.id.bt_login).setOnClickListener(this);
+
     }
-    /**
-     *  初始化地下导航栏
-     */
-    private void initUI() {
-        mFragmentList = new ArrayList<>();
-        mFragmentList.add(new EduPlanFragment());
-        mFragmentList.add(new FragmentB());
-        mFragmentList.add(new EduVideoFragment());
-        mFragmentList.add(new EduTestFragment());
-        mFragmentList.add(new FragmentE());
-        MyFragmentAdapter myFragmentAdapter = new MyFragmentAdapter(getSupportFragmentManager(), mFragmentList);
 
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent();
+        switch (v.getId()){
+            case R.id.bt_register:
+                //跳转到注册界面
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
-        viewPager.setAdapter(myFragmentAdapter);
+                intent.setClass(getApplicationContext(), RegisterActivity.class);
+                this.startActivity(intent);
+                break;
+            case R.id.bt_login:
 
-        final String[] colors = getResources().getStringArray(R.array.colors);
+                userName=etUser.getText().toString();
+                password=etPassword.getText().toString();
+                if(login(userName,password)){
+                    Toast.makeText(MainActivity.this, "登录成功",Toast.LENGTH_SHORT).show();
+                    intent.setClass(getApplicationContext(), HomeActivity.class);
+                    this.startActivity(intent);
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                }
 
-        final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb_horizontal);
-        final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
-        models.add(
-                new NavigationTabBar.Model.Builder(
-                        //图标
-                        getResources().getDrawable(R.drawable.ic_first),
-                        Color.parseColor(colors[0]))
-                        //选中后图标
-                        //.selectedIcon(getResources().getDrawable(R.drawable.ic_sixth))
-                        .title("教学计划")
-                        .build()
-        );
-        models.add(
-                new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_second),
-                        Color.parseColor(colors[1]))
-                      //  .selectedIcon(getResources().getDrawable(R.drawable.ic_eighth))
-                        .title("专题课件")
-                        .build()
-        );
-        models.add(
-                new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_third),
-                        Color.parseColor(colors[2]))
-                      //  .selectedIcon(getResources().getDrawable(R.drawable.ic_seventh))
-                        .title("教学视频")
-                        .build()
-        );
-        models.add(
-                new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_fourth),
-                        Color.parseColor(colors[3]))
-                      //  .selectedIcon(getResources().getDrawable(R.drawable.ic_eighth))
-                        .title("在线测试")
-                        .build()
-        );
-        models.add(
-                new NavigationTabBar.Model.Builder(
+                break;
+        }
 
-                        getResources().getDrawable(R.drawable.ic_fifth),
-                        Color.parseColor(colors[4]))
+    }
 
-                     //   .selectedIcon(getResources().getDrawable(R.drawable.ic_eighth))
-                        .title("经典阅读")
-                        .build()
-        );
+    private boolean login(String userName, String password) {
+        dbOpenHelper = new DBOpenHelper(this,"user.db",null,1);
+        db = dbOpenHelper.getWritableDatabase();
+        String sql = "select * from user where name=? and password=?";
+        Cursor cursor = db.rawQuery(sql, new String[] {userName, password});
+        if (cursor.moveToFirst()) {
+            cursor.close();
+            return true;
+        }
+        return false;
 
-        navigationTabBar.setModels(models);
-        navigationTabBar.setViewPager(viewPager, 0);
-        navigationTabBar.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(final int position) {
-                navigationTabBar.getModels().get(position).hideBadge();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(final int state) {
-
-            }
-        });
-        //显示小标，有上面消息之类的，类似qq的99+
-//        navigationTabBar.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                for (int i = 0; i < navigationTabBar.getModels().size(); i++) {
-//                    final NavigationTabBar.Model model = navigationTabBar.getModels().get(i);
-//                    navigationTabBar.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            model.showBadge();
-//                        }
-//                    }, i * 100);
-//                }
-//            }
-//        }, 500);
     }
 }

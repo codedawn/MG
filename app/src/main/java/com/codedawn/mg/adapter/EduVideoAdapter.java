@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.codedawn.mg.R;
 import com.codedawn.mg.entity.EduVideo;
-import com.codedawn.mg.view.SimplePlayerActivity;
+import com.codedawn.mg.view.PlayerActivity;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class EduVideoAdapter extends RecyclerView.Adapter<EduVideoAdapter.InnerH
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, SimplePlayerActivity.class);
+                Intent intent = new Intent(context, PlayerActivity.class);
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("eduVideo", mData.get(position));

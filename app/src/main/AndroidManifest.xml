@@ -9,7 +9,22 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".view.SimplePlayerActivity">
+        <activity
+                android:name=".view.RegisterActivity"
+                android:label="@string/title_activity_register" />
+        <activity
+                android:name=".view.IndexActivity"
+                android:label="IndexActivity"
+        />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".view.PlayerActivity">
 <!--             <intent-filter>-->
 <!--             <action android:name="android.intent.action.MAIN"/>-->
 
@@ -17,7 +32,7 @@
 <!--             <category android:name="android.intent.category.LAUNCHER"/>-->
 <!--             </intent-filter>-->
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".view.HomeActivity">
 
              <intent-filter>
              <action android:name="android.intent.action.MAIN"/>

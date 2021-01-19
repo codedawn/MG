@@ -1,10 +1,12 @@
 package com.codedawn.mg.view;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import com.codedawn.mg.R;
 
 
@@ -59,5 +61,13 @@ public class FragmentB extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_b, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+//        X5WebView webView = view.findViewById(R.id.web_view);
+//        webView.loadUrl("http://www.cztouch.com/upfiles/soft/testpdf.pdf");
+
     }
 }

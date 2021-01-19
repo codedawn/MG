@@ -30,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         initUI();
         initDrawer();
 
+
     }
 
     /**
